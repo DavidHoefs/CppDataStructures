@@ -1,13 +1,17 @@
+
 #include <iostream>
 #include "stack.h"
 #include "queue.h"
 #include "linkedlist.h"
+#include "BinarySearchTree.h"
+
+
 using namespace algo;
 
 int main()
 {
-    std::cout << "STACK" << std::endl;
-    algo::Stack<double> st{ 10 };
+	std::cout << "STACK" << std::endl;
+	algo::Stack<double> st{ 10 };
 	for (int i = 0; i < 10; i++)
 	{
 		st.push(i);
@@ -52,11 +56,9 @@ int main()
 	for (int l = N - 1; l > 0; l--)
 	{
 		lst.pushFront(l);
-
 	}
 
 	lst.print(lst);
-
 
 	std::cout << "TESTING LIST ----------------------" << std::endl;
 	algo::List<char> nodeList;
@@ -67,16 +69,19 @@ int main()
 	nodeList.pushBack('t');
 	nodeList.pushBack('o');
 
-
-
-	
 	nodeList.printList(nodeList);
 	std::string output = nodeList.isPalindrome() == 1 ? "TRUE" : "FALSE";
 	std::cout << "Palindrome?: " << output << std::endl;
-	
-	
+
+	std::cout << "TESTING BST ----------------------" << std::endl;
+
+	algo::BinarySearchTree<int> tree;
+	for (int l = 0; l < 10; l++)
+	{
+		tree.insert(random_range(1,12));
+	}
+
+	tree.printTree();
 
 	return 0;
-
 }
-

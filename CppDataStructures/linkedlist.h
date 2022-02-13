@@ -1,3 +1,4 @@
+#pragma once
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
@@ -275,7 +276,7 @@ namespace algo {
 		}
 
 		/// <summary>
-		/// Checks if list of chars is a palindrome. Compares first and last, popping values after evaluating. 
+		/// Checks if list of chars is a palindrome. Compares first and last, popping values after evaluating.
 		/// </summary>
 		/// <returns>TRUE/FALSE</returns>
 
@@ -284,7 +285,7 @@ namespace algo {
 				return false;
 
 			while (!empty()) {
-				if (_head->next == nullptr || _size == 1 ) {
+				if (_head->next == nullptr || _size == 1) {
 					break;
 				}
 				char first = this->front();

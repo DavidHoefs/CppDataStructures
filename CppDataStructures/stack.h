@@ -1,3 +1,4 @@
+#pragma once
 #ifndef STACK_H
 #define STACK_H
 
@@ -6,84 +7,81 @@
 #include <cstdint>
 
 namespace algo {
-    const uint32_t defaultCapacity = 500;
+	const uint32_t defaultCapacity = 500;
 
-    template <typename T = uintptr_t>
-    class Stack {
-    public:
-        Stack(uint32_t capacity = defaultCapacity)
-            : _capacity{ capacity }, _size{ 0 }, _elements{ new T[_capacity] }
-        {
-        }
+	template <typename T = uintptr_t>
+	class Stack {
+	public:
+		Stack(uint32_t capacity = defaultCapacity)
+			: _capacity{ capacity }, _size{ 0 }, _elements{ new T[_capacity] }
+		{
+		}
 
-        Stack(const Stack& st)
-            : _capacity{ st.capacity }, _size{ st._size }, _elements{ new T[_capacity] }
-        {
-            for (uint32_t i = 0; i < _capacity; ++i) {
-                _elements[i] = st._elements[i];
-            }
-        }
+		Stack(const Stack& st)
+			: _capacity{ st.capacity }, _size{ st._size }, _elements{ new T[_capacity] }
+		{
+			for (uint32_t i = 0; i < _capacity; ++i) {
+				_elements[i] = st._elements[i];
+			}
+		}
 
-        bool empty()
-        {
-            return (_size == 0);
-        }
+		bool empty()
+		{
+			return (_size == 0);
+		}
 
-        void pop()
-        {
-            if (empty())
-                return;
-            _size--;
-        }
+		void pop()
+		{
+			if (empty())
+				return;
+			_size--;
+		}
 
-        void push(const T& obj) {
-            if (_size == _capacity)
-                throw stack_out_of_bound_exception;
-            _elements[_size++] = obj;
-        }
+		void push(const T& obj) {
+			if (_size == _capacity)
+				throw stack_out_of_bound_exception;
+			_elements[_size++] = obj;
+		}
 
-        const T& top()
-        {
-            if (empty())
-                throw stack_empty_exception;
-            return _elements[_size - 1];
-        }
+		const T& top()
+		{
+			if (empty())
+				throw stack_empty_exception;
+			return _elements[_size - 1];
+		}
 
-        uint32_t size()
-        {
-            return _size;
-        }
+		uint32_t size()
+		{
+			return _size;
+		}
 
-        void print(std::ostream& out = std::cout)
-        {
-            for (int i = _size - 1; i >= 0; --i) {
-                out << _elements[i] << " ";
-            }
-            out << std::endl;
-        }
+		void print(std::ostream& out = std::cout)
+		{
+			for (int i = _size - 1; i >= 0; --i) {
+				out << _elements[i] << " ";
+			}
+			out << std::endl;
+		}
 
+	private:
+		uint32_t _capacity;
+		uint32_t _size;
+		T* _elements;
+		Stack& operator=(const Stack& st);
 
-    private:
-        uint32_t _capacity;
-        uint32_t _size;
-        T* _elements;
-        Stack& operator=(const Stack& st);
+		class StackEmptyException : public std::exception {
+			virtual const char* what() const throw()
+			{
+				return "Stack is empty";
+			}
+		} stack_empty_exception;
 
-        class StackEmptyException : public std::exception {
-            virtual const char* what() const throw()
-            {
-                return "Stack is empty";
-            }
-        } stack_empty_exception;
-
-        class StackOutofBoundException : public std::exception {
-            virtual const char* what() const throw()
-            {
-                return "Stack Index out of bound";
-            }
-        } stack_out_of_bound_exception;
-
-    }; // end of class stack
-
+		class StackOutofBoundException : public std::exception {
+			virtual const char* what() const throw()
+			{
+				return "Stack Index out of bound";
+			}
+		} stack_out_of_bound_exception;
+	}; // end of class stack
 } // end of namespace algo
 #endif
