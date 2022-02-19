@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{f012bb10-9990-4328-a33c-70320a74d95b}</ProjectGuid>
-    <RootNamespace>CppDataStructures</RootNamespace>
+    <ProjectGuid>{3415fc8e-280b-4a54-902d-f8667b278a41}</ProjectGuid>
+    <RootNamespace>GOLDriver</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -116,7 +116,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,18 +139,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BinarySearchTree.Imp.h" />
-    <ClCompile Include="CppDataStructures.cpp" />
-    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="GOLDriver.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BinarySearchTree.h" />
-    <ClInclude Include="Generic.h" />
-    <ClInclude Include="HeapSort.h" />
-    <ClInclude Include="linkedlist.h" />
-    <ClInclude Include="queue.h" />
-    <ClInclude Include="stack.h" />
-    <ClInclude Include="stdafx.h" />
+    <ProjectReference Include="..\CppDataStructures\CppDataStructures.vcxproj">
+      <Project>{f012bb10-9990-4328-a33c-70320a74d95b}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,9 +4,50 @@
 #include "queue.h"
 #include "linkedlist.h"
 #include "BinarySearchTree.h"
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <array>
+#include <math.h>
+#include <algorithm>
+#include <map>
+#include "HeapSort.h"
 
 
 using namespace algo;
+
+struct CoordinateNode {
+	std::pair<int, int> coordinates;
+	int value;
+
+	bool operator<(const CoordinateNode& comp) const {
+		if (this->coordinates.first < comp.coordinates.first) {
+			return true;
+		}
+		else if ((this->coordinates.first == comp.coordinates.first) && (this->coordinates.second < comp.coordinates.second)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	bool operator>(const CoordinateNode& comp) const {
+		if (this->coordinates.first > comp.coordinates.first) {
+			return true;
+		}
+		else if ((this->coordinates.first == comp.coordinates.first) && (this->coordinates.second > comp.coordinates.second)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+};
+
+void gameOfLife();
+algo::BinarySearchTree<CoordinateNode> readToTree(std::string& fileName);
 
 int main()
 {
@@ -58,6 +99,7 @@ int main()
 		lst.pushFront(l);
 	}
 
+
 	lst.print(lst);
 
 	std::cout << "TESTING LIST ----------------------" << std::endl;
@@ -75,13 +117,85 @@ int main()
 
 	std::cout << "TESTING BST ----------------------" << std::endl;
 
-	algo::BinarySearchTree<int> tree;
-	for (int l = 0; l < 10; l++)
+	algo::BinarySearchTree<CoordinateNode> tree;
+	for (int l = 0; l < 100; l++)
 	{
-		tree.insert(random_range(1,12));
+		CoordinateNode tempNode;
+		
+		std::pair<int, int> temp;
+		temp.first = l;
+		temp.second = l + 5;
+		tempNode.coordinates = temp;
+		tempNode.value = l % 2 == 0 ? 1 : 0;
+		tree.insert(tempNode);
+		//tree.insert(random_range(1,250));
 	}
 
-	tree.printTree();
+	CoordinateNode node;
+	node.coordinates = std::pair<int, int>(0, 1);
+	node.value = 0;
+	bool contained = tree.contains(node);
+	gameOfLife();
+
+	//tree.printTree();
+
+	std::cout << "TESTING HEAP SORT ----------------------" << std::endl;
+	int arr[] = { 4,2,3,1,5,6,8, };
+	for (int a = 0; a < 7; ++a) {
+		std::cout << arr[a] << " ";
+	}
+	std::cout << std::endl;
+	std::cout << "SORTED:" << std::endl;
+
+	algo::heap_sort(arr, 7);
+	for (int d = 0; d < 7; d++) {
+		std::cout << arr[d] << " ";
+	}
+	std::cout << std::endl;
 
 	return 0;
+}
+
+
+void gameOfLife() {
+	std::string fileName = "C:\\Users\\David Hoefs\\source\\repos\\GameOfLifeConsole\\GameOfLifeConsole\\6x6step.dat";
+	algo::BinarySearchTree<CoordinateNode> gameTree = readToTree(fileName);
+
+}
+
+algo::BinarySearchTree<CoordinateNode> readToTree(std::string& fileName) {
+	std::fstream in = std::fstream(fileName);
+	
+	char c;
+	int x = 0, y = 0;
+	algo::BinarySearchTree<CoordinateNode> output;
+	if (in.is_open()) {
+		while (in.good()) {
+			if (x == 99 && y == 100)
+				break;
+			CoordinateNode node;
+			if (y == 100) {
+				y = 0;
+				x++;
+			}
+
+			node.coordinates.first = x;
+			node.coordinates.second = y;
+			in.get(c);
+			if (c == 'O') {
+				node.value = 1;
+				output.insert(node);
+				y++;
+			}
+			else if (c == '.') {
+				node.value = 0;
+				output.insert(node);
+				y++;
+			}
+		}
+	}
+
+	in.close();
+
+	return output;
 }
